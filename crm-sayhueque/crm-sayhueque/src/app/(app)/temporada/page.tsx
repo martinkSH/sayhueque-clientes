@@ -22,5 +22,11 @@ export default async function TemporadaPage() {
     .eq('activo', true)
     .order('nombre')
 
-  return <TemporadaClient clientes={clientes ?? []} usuarios={usuarios ?? []} />
+  // Normalizar vendedor: Supabase devuelve array en joins, necesitamos objeto o null
+  const clientesNorm = (clientes ?? []).map((c: any) => ({
+    ...c,
+    vendedor: Array.isArray(c.vendedor) ? (c.vendedor[0] ?? null) : (c.vendedor ?? null),
+  }))
+
+  return <TemporadaClient clientes={clientesNorm} usuarios={usuarios ?? []} />
 }
