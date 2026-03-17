@@ -7,7 +7,8 @@ import { cn, getInitials } from '@/lib/utils'
 import { Usuario } from '@/types'
 import {
   Users, Star, CalendarDays, BarChart2,
-  LogOut, Leaf, ChevronRight, Settings, Upload
+  LogOut, Leaf, ChevronRight, Settings,
+  Upload, TrendingUp
 } from 'lucide-react'
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
   { href: '/clientes/actuales', label: 'Clientes actuales', icon: Star },
   { href: '/clientes/potenciales', label: 'Clientes potenciales', icon: Users },
   { href: '/eventos', label: 'Eventos / Ferias', icon: CalendarDays },
+  { href: '/temporada', label: 'Temporada 25/26', icon: TrendingUp },
 ]
 
 export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
@@ -47,9 +49,7 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
         {navItems.map(({ href, label, icon: Icon }) => {
           const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
           return (
-            <Link
-              key={href}
-              href={href}
+            <Link key={href} href={href}
               className={cn(
                 'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all duration-150',
                 active
@@ -67,10 +67,8 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
 
       {/* Footer */}
       <div className="px-3 py-3 border-t border-[#e8e4dd] space-y-0.5">
-        {/* Importar — solo admins */}
         {usuario?.rol === 'admin' && (
-          <Link
-            href="/importar"
+          <Link href="/importar"
             className={cn(
               'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors',
               pathname === '/importar'
@@ -82,10 +80,8 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
             <span>Importar Excel</span>
           </Link>
         )}
-
         {usuario?.rol === 'admin' && (
-          <Link
-            href="/settings"
+          <Link href="/settings"
             className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-colors"
           >
             <Settings className="w-4 h-4" />
@@ -93,7 +89,7 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
           </Link>
         )}
 
-        {/* User info */}
+        {/* User */}
         <div className="flex items-center gap-2.5 px-3 py-2 mt-1">
           <div className="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0">
             <span className="text-xs font-semibold text-brand-700">
@@ -104,9 +100,7 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
             <p className="text-xs font-medium text-gray-900 truncate">{usuario?.nombre || 'Usuario'}</p>
             <p className="text-[10px] text-gray-400 capitalize">{usuario?.rol}</p>
           </div>
-          <button
-            onClick={handleLogout}
-            title="Cerrar sesión"
+          <button onClick={handleLogout} title="Cerrar sesión"
             className="p-1 text-gray-400 hover:text-red-500 transition-colors rounded"
           >
             <LogOut className="w-3.5 h-3.5" />
