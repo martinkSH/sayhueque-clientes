@@ -7,7 +7,7 @@ import { cn, getInitials } from '@/lib/utils'
 import { Usuario } from '@/types'
 import {
   Users, Star, CalendarDays, BarChart2,
-  LogOut, Leaf, ChevronRight, Settings
+  LogOut, Leaf, ChevronRight, Settings, Upload
 } from 'lucide-react'
 
 const navItems = [
@@ -67,6 +67,22 @@ export default function Sidebar({ usuario }: { usuario: Usuario | null }) {
 
       {/* Footer */}
       <div className="px-3 py-3 border-t border-[#e8e4dd] space-y-0.5">
+        {/* Importar — solo admins */}
+        {usuario?.rol === 'admin' && (
+          <Link
+            href="/importar"
+            className={cn(
+              'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors',
+              pathname === '/importar'
+                ? 'bg-brand-500 text-white'
+                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+            )}
+          >
+            <Upload className="w-4 h-4" />
+            <span>Importar Excel</span>
+          </Link>
+        )}
+
         {usuario?.rol === 'admin' && (
           <Link
             href="/settings"
